@@ -15,7 +15,7 @@ const closeCard = document.getElementById("close-card");
 const saveCard = document.getElementById("save-card");
 const inputCardName = document.getElementById("card-title");
 const cardUrl = document.getElementById("card-url");
-const cardGallery = document.querySelector(".card__gallery");
+const cardGallery = document.querySelector(".gallery__cards");
 const cardTemplate = document.getElementById("card-template");
 
 const initialCards = [
@@ -50,7 +50,7 @@ initialCards.forEach((card) => {
   const cardImage = newCard.querySelector(".card__image");
   const cardName = newCard.querySelector(".card__text");
   const likeButton = newCard.querySelector("#like-button");
-  const removeCardButton = newCard.querySelector(".remove-card");
+  const removeCardButton = newCard.querySelector(".card__remove-button");
   const popupImage = document.querySelector("#image-popup");
   const closePopupImage = document.querySelector("#close-image");
   const imageLabel = document.querySelector("#popup-image");
@@ -122,7 +122,7 @@ saveCard.addEventListener("click", function (evt) {
   const cardImage = newCard.querySelector(".card__image");
   const cardName = newCard.querySelector(".card__text");
   const likeButton = newCard.querySelector("#like-button");
-  const removeCardButton = newCard.querySelector(".remove-card");
+  const removeCardButton = newCard.querySelector(".card__remove-button");
 
   likeButton.addEventListener("click", function (evt) {
     likeButton.classList.toggle("liked-button");

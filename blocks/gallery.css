@@ -2,7 +2,7 @@
     margin: auto;
   }
   
-  .card__gallery {
+  .gallery__cards {
     display: grid;
     max-width: 880px;
     width: 100%;
@@ -63,7 +63,7 @@
     outline: none;
   }
   
-  .remove-card {
+  .card__remove-button {
     position: absolute;
     top: 5%;
     left: 88%;
@@ -84,11 +84,11 @@
     background-color: transparent;
   }
   
-  .button-liked:hover {
+  .card__like-button:hover {
     opacity: 0.5;
   }
   
-  .button-liked {
+  .card__like-button {
     width: 21px;
     height: 19px;
     padding: 10px;
