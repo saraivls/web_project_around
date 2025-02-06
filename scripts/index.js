@@ -18,6 +18,11 @@ const cardUrl = document.getElementById("card-url");
 const cardGallery = document.querySelector(".gallery__cards");
 const cardTemplate = document.getElementById("card-template");
 
+const popupImage = document.querySelector("#image-popup"); 
+const closePopupImage = document.querySelector("#close-image");
+const imageLabel = document.querySelector("#popup-image");
+const popupLabel = document.querySelector("#popup-label");
+
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -51,10 +56,6 @@ initialCards.forEach((card) => {
   const cardName = newCard.querySelector(".card__text");
   const likeButton = newCard.querySelector("#like-button");
   const removeCardButton = newCard.querySelector(".card__remove-button");
-  const popupImage = document.querySelector("#image-popup");
-  const closePopupImage = document.querySelector("#close-image");
-  const imageLabel = document.querySelector("#popup-image");
-  const popupLabel = document.querySelector("#popup-label");
 
   likeButton.addEventListener("click", function (evt) {
     likeButton.classList.toggle("liked-button");
@@ -141,16 +142,13 @@ saveCard.addEventListener("click", function (evt) {
   cardImage.addEventListener("click", function (evt) {
     popupImage.showModal();
 
-    imageLabel.src = card.link;
-    popupLabel.textContent = card.name;
+    imageLabel.src = cardLink;
+    popupLabel.textContent = cardValue;
   });
 
   closePopupImage.addEventListener("click", function (evt) {
     popupImage.close();
   });
-
-  cardImage.src = card.link;
-  cardName.textContent = card.name;
 });
 
 popup.addEventListener("click", (evt) => {
