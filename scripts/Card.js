@@ -35,9 +35,11 @@ export default class Card {
         this._popupImage.close();
     }
     
-    _deleteCard(){
-        this._removeCardButton = this._element.querySelector("#.remove-card");
+    
+
+    _deleteCard() {
         this._element.remove();
+        this._element = null;
     }
 
 
