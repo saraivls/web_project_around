@@ -36,9 +36,14 @@ export default class Popup {
 export class PopupWithImage extends Popup{
     constructor({popupSelector}){
         super(popupSelector);
+        this._imageElement = this._popup.querySelector('.image-details');
+        this._captionElement = this._popup.querySelector('.popup-name');
     }
 
-    open() {
+    open({ link, name }) {
+        this._imageElement.src = link;
+        this._imageElement.alt = name;
+        this._captionElement.textContent = name;
         super.open();
       }
     
@@ -51,25 +56,24 @@ export class PopupWithForm{
     constructor({popupSelector, handleFormSubmit}){
         super(popupSelector);
         this._handleFormSubmit = handleFormSubmit;
-        this._form = this._popup.querySelector("form");
+        this._form = this._popup.querySelector('.popup__form');
+    this._inputList = this._form.querySelectorAll('.popup__input');
     }
 
      _getInputValues(){
-        this._inputList = this._popup.querySelectorAll(".popup__input");
-        this._formValues = {};
-        this._inputList.forEach((input) => {
-            this._formValues[input.name] = input.value;
-          });
-
-        return this._formValues;
+        const formValues = {};
+    this._inputList.forEach(input => {
+      formValues[input.name] = input.value;
+    });
+    return formValues;
     }
 
     setEventListeners(){
-        this._popup.addEventListener("submit", (evt) => {
-            this.submitText.textContent = "Guardando...";
-            evt.preventDefault();
-            this._handleFormSubmit(this._getInputValues());
-            this.close();
+        super.setEventListeners();
+        this._form.addEventListener('submit', (evt) => {
+          evt.preventDefault();
+          this._handleFormSubmit(this._getInputValues());
+          this.close();
           });
     }
 

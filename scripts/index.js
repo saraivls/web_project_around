@@ -5,6 +5,8 @@ import {
   PopupWithForm,
   PopupWithImage,
 } from "./Popup.js";
+import UserInfo from "./UserInfo.js";
+import Section from "./Section.js";
 import {
   popup,
   button,
@@ -91,13 +93,14 @@ imagePopup.setEventListeners();
 
 
 const profileFormPopup = new PopupWithForm(
-  "#profile-popup",
+  '#profile-popup',
   (formData) => {
-    document.querySelector(".profile__name").textContent = formData.name;
-    document.querySelector(".profile__text").textContent = formData.description;
+    userInfo.setUserInfo({
+      name: formData['name-profile'],
+      job: formData['job-profile']
+    });
   }
 );
-profileFormPopup.setEventListeners();
 
 
 
@@ -110,3 +113,22 @@ const cardFormPopup = new PopupWithForm(
 );
 cardFormPopup.setEventListeners();
 
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  jobSelector: ".profile__text"
+});
+
+
+const section = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const cardNode = new Card(item.name, item.link, "#card-template");
+      return cardNode.getView();
+    }
+  },
+  ".gallery"
+);
+
+section.renderItems();
