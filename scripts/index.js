@@ -2,6 +2,10 @@ import { resetValidations, validationsSettings } from "./validate.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import {
+  PopupWithForm,
+  PopupWithImage,
+} from "./Popup.js";
+import {
   popup,
   button,
   closeButton,
@@ -78,3 +82,31 @@ popupCard.addEventListener("click", (evt) => {
     resetValidations(validationsSettings);
   }
 });
+
+
+
+const imagePopup = new PopupWithImage("#image-popup");
+imagePopup.setEventListeners();
+
+
+
+const profileFormPopup = new PopupWithForm(
+  "#profile-popup",
+  (formData) => {
+    document.querySelector(".profile__name").textContent = formData.name;
+    document.querySelector(".profile__text").textContent = formData.description;
+  }
+);
+profileFormPopup.setEventListeners();
+
+
+
+const cardFormPopup = new PopupWithForm(
+  "#card-popup",
+  (formData) => {
+    const newCard = new Card(formData.title, formData.url, "#card-template");
+    cardGallery.prepend(newCard.getView());
+  }
+);
+cardFormPopup.setEventListeners();
+
