@@ -1,40 +1,46 @@
 export default class Popup {
-    constructor(popupSelector){
-        this._popup = document.querySelector(popupSelector);
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+        this._closeButton = this._popup.querySelector(".close");
+    this.submitText = this._popup.querySelector(".submit__text");
+  }
+
+  open() {
+    this._popup.showModal();
+  }
+
+  close() {
+    this._popup.close();
+  }
+
+  _handleEscClose() {
+    document.addEventListener("keydown", (evt) => {
+      if (evt.key === "Escape") {
+        this.close();
+      }
+    });
+  }
+
+  setEventListeners() {
+    if (this._closeButton) {
+      this._closeButton.addEventListener("click", () => this.close());
     }
 
-    open() {
-        this._popup.showModal();
-      }
-
-      close(){
+    this._popup.addEventListener("click", (evt) => {
+      if (evt.target === this._popup) {
         this._popup.close();
       }
+    });
 
-    _handleEscClose(evt) {
-        if (evt.key === "Escape") {
-          this.close();
-        }
-      }
-
-    setEventListeners() {
-        if (this._closeButton) {
-            this._closeButton.addEventListener("click", () => this.close());
-          }
-      
-          
-          this._popup.addEventListener("click", (evt) => {
-            if (evt.target === this._popup) {
-              this.close();
-            }
-          });
-
-          this._handleEscClose();
-      }
+    this._handleEscClose();
+  }
 }
 
-export class PopupWithImage extends Popup{
+/*export class PopupWithImage extends Popup{
     constructor({popupSelector}){
+        if (!popupSelector) {
+            throw new Error("popupSelector is required for PopupWithImage");
+        }
         super(popupSelector);
         this._imageElement = this._popup.querySelector('.image-details');
         this._captionElement = this._popup.querySelector('.popup-name');
@@ -50,10 +56,26 @@ export class PopupWithImage extends Popup{
     close() {
         super.close();
       }
+}*/
+
+export class PopupWithImage extends Popup {
+    constructor(popupSelector) {
+        super(popupSelector);
+        this._popupImage = this._popup.querySelector('.image-details');
+        this._popupTitle = this._popup.querySelector('.popup-name');
+    }
+
+    open({ src, alt, caption }) {
+        this._popupImage.src = src;
+        this._popupImage.alt = alt || caption;
+        this._popupTitle.textContent = caption;
+
+        super.open();
+    }
 }
 
-export class PopupWithForm{
-    constructor({popupSelector, handleFormSubmit}){
+export class PopupWithForm extends Popup{
+    constructor(popupSelector, handleFormSubmit){
         super(popupSelector);
         this._handleFormSubmit = handleFormSubmit;
         this._form = this._popup.querySelector('.popup__form');

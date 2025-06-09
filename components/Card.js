@@ -1,3 +1,4 @@
+
 export default class Card {
     constructor(name, link, cardSelector, handleCardClick) {
         this._name = name;
@@ -17,8 +18,11 @@ export default class Card {
     }
 
     _viewCard() {
-        this._handleCardClick(this._name, this._link);
-    }
+  this._handleCardClick({ 
+    name: this._name, 
+    link: this._link 
+  });
+}
 
     _closeCard() {
         this._closePopupImage = this._element.querySelector("#close-image");

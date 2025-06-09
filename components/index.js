@@ -1,6 +1,6 @@
-import { resetValidations, validationsSettings } from "./validate.js";
+import { resetValidations, validationsSettings } from "../scripts/validate.js";
 import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
+import FormValidator from '../components/FormValidator.js'; 
 import {
   PopupWithForm,
   PopupWithImage,
@@ -25,14 +25,65 @@ import {
   cardGallery,
   initialCards,
   initialFormValidator,
-} from "./utils.js";
+} from "./Utils.js";
+
+const imagePopup = new PopupWithImage("#image-popup");
+imagePopup.setEventListeners(); 
+
+function handleProfileSubmit(formData) {
+  userInfo.setUserInfo({
+    name: formData['profile-name'] || '',
+    job: formData['profile-job'] || ''
+  });
+  profileFormPopup.close();
+}
+
+function handleCardSubmit(formData) {
+  const newCard = {
+    name: formData['card-name'] || '',
+    link: formData['card-url'] || ''
+  };
+  
+  const cardNode = new Card(newCard.name, newCard.link, "#card-template");
+  cardGallery.prepend(cardNode.getView());
+  cardFormPopup.close();
+}
+
+const profileFormPopup = new PopupWithForm("#profile-popup", handleProfileSubmit);
+profileFormPopup.setEventListeners(); 
+
+const cardFormPopup = new PopupWithForm("#card-popup", handleCardSubmit);
+cardFormPopup.setEventListeners(); 
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  jobSelector: ".profile__text"
+});
 
 
-initialCards.forEach((card) => {
+const section = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const cardNode = new Card(item.name, item.link, "#card-template");
+      return cardNode.getView();
+    }
+  },
+  ".gallery__cards" 
+);
+
+section.renderItems();
+
+
+
+
+
+/*initialCards.forEach((card) => {
   const cardNode = new Card(card.name, card.link, "#card-template");
   const cardNodeElement = cardNode.getView();
   cardGallery.prepend(cardNodeElement);
-});
+});*/
+// este codigo es antiguo y no se usa.
 
 
 initialFormValidator.forEach((formElement) => {
@@ -59,7 +110,8 @@ closeCard.addEventListener("click", () => {
   popupCard.close();
   resetValidations(validationsSettings);
 });
-saveCard.addEventListener("click", (evt) => {
+
+/*saveCard.addEventListener("click", (evt) => {
   evt.preventDefault();
   const newCard = {
     name: inputCardName.value,
@@ -68,7 +120,8 @@ saveCard.addEventListener("click", (evt) => {
   const cardNode = new Card(newCard.name, newCard.link, "#card-template");
   cardGallery.prepend(cardNode.getView());
   popupCard.close();
-});
+});*/
+// este codigo es antiguo y no se usa.
 
 
 popup.addEventListener("click", (evt) => {
@@ -87,48 +140,13 @@ popupCard.addEventListener("click", (evt) => {
 
 
 
-const imagePopup = new PopupWithImage("#image-popup");
-imagePopup.setEventListeners();
 
 
 
-const profileFormPopup = new PopupWithForm(
-  '#profile-popup',
-  (formData) => {
-    userInfo.setUserInfo({
-      name: formData['name-profile'],
-      job: formData['job-profile']
-    });
-  }
-);
 
 
 
-const cardFormPopup = new PopupWithForm(
-  "#card-popup",
-  (formData) => {
-    const newCard = new Card(formData.title, formData.url, "#card-template");
-    cardGallery.prepend(newCard.getView());
-  }
-);
-cardFormPopup.setEventListeners();
 
 
-const userInfo = new UserInfo({
-  nameSelector: ".profile__name",
-  jobSelector: ".profile__text"
-});
 
 
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardNode = new Card(item.name, item.link, "#card-template");
-      return cardNode.getView();
-    }
-  },
-  ".gallery"
-);
-
-section.renderItems();
