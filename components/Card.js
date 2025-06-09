@@ -4,7 +4,7 @@ export default class Card {
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
-        this._handleCardClick = handleCardClick; 
+        this._handleCardClick = typeof handleCardClick === "function" ? handleCardClick : () => {}; 
     }
 
     _getTemplate() {
