@@ -37,9 +37,13 @@
   }
   
   .popup__form {
-    justify-content: center;
-    padding: auto 36px 36px 36px;
-    width: 90%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 36px 36px;
+    width: 100%;
+  /* margin: 0 24px;*/
+    box-sizing: border-box;
   }
   
   .popup__input {
@@ -54,7 +58,7 @@
     line-height: 17px;
     color: #000000;
     padding: 13.26px 0;
-    margin-left: 35px;
+    
   }
   
   .popup__input_description {
@@ -69,7 +73,7 @@
     line-height: 17px;
     color: #000000;
     padding: 13.26px 0;
-    margin: 0 auto 0px 36px;
+    
   }
   
   .popup__input_card-title {
@@ -84,7 +88,7 @@
     line-height: 17px;
     color: #000000;
     padding: 13.26px 0;
-    margin-left: 35px;
+    
   }
   
   .popup__input_card-url {
@@ -99,7 +103,7 @@
     line-height: 17px;
     color: #000000;
     padding: 13.26px 0;
-    margin: 0 auto 0px 36px;
+    /*margin: 0 auto 0px 36px;*/
   }
   
   .popup__image-box {
@@ -254,7 +258,6 @@
     }
   
     .popup__form {
-      width: 90%;
       margin: 0;
     }
   
