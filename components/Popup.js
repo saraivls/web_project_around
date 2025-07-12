@@ -104,3 +104,29 @@ export class PopupWithForm extends Popup{
         this._form.reset();
       }
 }
+
+export class PopupWithConfirmation extends Popup {
+    constructor(popupSelector, handleConfirmDelete) {
+        super(popupSelector);
+        this._handleConfirmDelete = handleConfirmDelete;
+        this._id = "";
+    }
+    open(id) {
+        this._id = id;
+        super.open();
+    }
+
+    confirm(_id) {
+        this._popup.showModal();
+    }
+
+    setEventListeners() {
+        super.setEventListeners();
+        this._popup.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            console.log("submit", this._id);
+            this._handleConfirmDelete(this._id);
+            this.close();
+        });
+    }
+}
