@@ -4,6 +4,7 @@ import FormValidator from '../components/FormValidator.js';
 import {
   PopupWithForm,
   PopupWithImage,
+  PopupWithConfirmation,
 } from "./Popup.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
@@ -29,6 +30,9 @@ import {
 
 const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners(); 
+
+const confirmPopup = new PopupWithConfirmation("#confirm-popup");
+confirmPopup.setEventListeners();
 
 function handleProfileSubmit(formData) {
   userInfo.setUserInfo({
