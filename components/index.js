@@ -86,8 +86,8 @@ function handleDeleteClick(cardId, cardElement) {
         cardElement.remove();
         confirmPopup.close();
       })
-      .catch(err => console.error("Error al eliminar tarjeta:", err));
-  });
+      .catch((err) => console.error("Error al eliminar tarjeta:", err));
+    });
 }
 
 

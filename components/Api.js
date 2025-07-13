@@ -1,7 +1,7 @@
 class Api {
     constructor(options) {
-        this.baseUrl = options.baseUrl;
-        this.headers = options.headers;
+        this._baseUrl = options.baseUrl;
+        this._headers = options.headers;
     }
 
     getUserInfo() {
