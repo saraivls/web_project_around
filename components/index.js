@@ -4,9 +4,11 @@ import FormValidator from '../components/FormValidator.js';
 import {
   PopupWithForm,
   PopupWithImage,
+  PopupWithConfirmation
 } from "./Popup.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
+import { api } from './Api.js';
 import {
   popup,
   button,
@@ -30,6 +32,7 @@ import {
 const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners(); 
 
+
 function handleProfileSubmit(formData) {
   userInfo.setUserInfo({
     name: formData['profile-name'] || '',
@@ -44,9 +47,20 @@ function handleCardSubmit(formData) {
     link: formData['card-url'] || ''
   };
   
-  const cardNode = new Card(newCard.name, newCard.link, "#card-template");
-  cardGallery.prepend(cardNode.getView());
-  cardFormPopup.close();
+  api.addNewCard(newCard)
+    .then((res) => {
+      const cardNode = new Card(
+        res.name,
+        res.link,
+        "#card-template",
+        (data) => imagePopup.open({ src: data.link, caption: data.name }),
+        handleDeleteClick,
+        res._id
+      );
+      cardGallery.prepend(cardNode.getView());
+      cardFormPopup.close();
+    })
+    .catch(err => console.error("Error al crear tarjeta:", err));
 }
 
 const profileFormPopup = new PopupWithForm("#profile-popup", handleProfileSubmit);
@@ -60,14 +74,37 @@ const userInfo = new UserInfo({
   jobSelector: ".profile__text"
 });
 
+const confirmPopup = new PopupWithConfirmation("#confirm-popup");
+confirmPopup.setEventListeners();
+
+function handleDeleteClick(cardId, cardElement) {
+  confirmPopup.open();
+  
+  confirmPopup.setSubmitAction(() => {
+    api.deleteCard(cardId)
+      .then(() => {
+        cardElement.remove();
+        confirmPopup.close();
+      })
+      .catch(err => console.error("Error al eliminar tarjeta:", err));
+  });
+}
+
 
 const section = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const cardNode = new Card(item.name, item.link, "#card-template");
-      return cardNode.getView();
-    }
+  const cardNode = new Card(
+    item.name,
+    item.link,
+    "#card-template",
+    (data) => imagePopup.open({ src: data.link, caption: data.name }),
+    handleDeleteClick,
+    item._id
+  );
+  return cardNode.getView();
+}
   },
   ".gallery__cards" 
 );
