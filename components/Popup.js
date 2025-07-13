@@ -106,27 +106,40 @@ export class PopupWithForm extends Popup{
 }
 
 export class PopupWithConfirmation extends Popup {
-    constructor(popupSelector, handleConfirmDelete) {
+    constructor(popupSelector) {
         super(popupSelector);
-        this._handleConfirmDelete = handleConfirmDelete;
-        this._id = "";
+         this._confirmButton = this._popup.querySelector('#confirm-delete-button');
     }
-    open(id) {
+    /*open(id) {
         this._id = id;
         super.open();
-    }
+   
 
     confirm(_id) {
         this._popup.showModal();
-    }
+    } }*/
 
-    setEventListeners() {
+  setSubmitAction(action) {
+    this._handleSubmitCallback = action;
+  }
+
+    /*setEventListeners() {
         super.setEventListeners();
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
             console.log("submit", this._id);
             this._handleConfirmDelete(this._id);
             this.close();
-        });
-    }
+        });*/
+
+  setEventListeners() {
+    super.setEventListeners();
+    this._confirmButton.addEventListener('click', () => {
+      this._handleSubmitCallback?.();
+    });
+  }
+
+  open(cardId) {
+    super.open();
+  }
 }
