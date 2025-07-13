@@ -32,6 +32,19 @@ import {
 const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners(); 
 
+const profileFormPopup = new PopupWithForm("#profile-popup", handleProfileSubmit);
+profileFormPopup.setEventListeners(); 
+
+const cardFormPopup = new PopupWithForm("#card-popup", handleCardSubmit);
+cardFormPopup.setEventListeners(); 
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  jobSelector: ".profile__text"
+});
+
+const confirmPopup = new PopupWithConfirmation("#confirm-popup");
+confirmPopup.setEventListeners();
 
 function handleProfileSubmit(formData) {
   userInfo.setUserInfo({
@@ -63,19 +76,6 @@ function handleCardSubmit(formData) {
     .catch(err => console.error("Error al crear tarjeta:", err));
 }
 
-const profileFormPopup = new PopupWithForm("#profile-popup", handleProfileSubmit);
-profileFormPopup.setEventListeners(); 
-
-const cardFormPopup = new PopupWithForm("#card-popup", handleCardSubmit);
-cardFormPopup.setEventListeners(); 
-
-const userInfo = new UserInfo({
-  nameSelector: ".profile__name",
-  jobSelector: ".profile__text"
-});
-
-const confirmPopup = new PopupWithConfirmation("#confirm-popup");
-confirmPopup.setEventListeners();
 
 function handleDeleteClick(cardId, cardElement) {
   confirmPopup.open();
@@ -110,8 +110,6 @@ const section = new Section(
 );
 
 section.renderItems();
-
-
 
 
 
