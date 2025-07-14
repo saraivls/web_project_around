@@ -185,3 +185,41 @@ popupCard.addEventListener("click", (evt) => {
 
 
 
+
+
+import {
+  popupAvatar,
+  closeAvatar,
+  saveAvatar,
+  inputAvatarUrl,
+  avatarImage,
+  avatarEditIcon,
+} from "./Utils.js";
+
+
+avatarEditIcon.addEventListener("click", () => {
+  popupAvatar.showModal();
+  inputAvatarUrl.value = "";
+});
+
+
+closeAvatar.addEventListener("click", () => {
+  popupAvatar.close();
+  resetValidations(validationsSettings);
+});
+
+
+saveAvatar.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  const newAvatarUrl = inputAvatarUrl.value;
+
+  api
+    .updateProfilePicture(newAvatarUrl)
+    .then((res) => {
+      avatarImage.src = res.avatar;
+      popupAvatar.close();
+    })
+    .catch((err) => {
+      console.error("Error al actualizar la imagen de perfil:", err);
+    });
+});
