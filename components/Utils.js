@@ -83,3 +83,22 @@ export {
   cardTemplate,
   initialCards,
 };
+
+const popupAvatar = document.getElementById("avatar-popup");
+const closeAvatar = document.getElementById("close-avatar");
+const saveAvatar = document.getElementById("save-avatar");
+const inputAvatarUrl = document.querySelector(".popup__input_avatar-link");
+const avatarImage = document.querySelector(".profile__avatar");
+const avatarEditIcon = document.querySelector(".profile__avatar-pencil");
+
+const formAvatar = document.querySelector("#avatar-popup .popup__form");
+initialFormValidator.push(formAvatar);
+
+export {
+  popupAvatar,
+  closeAvatar,
+  saveAvatar,
+  inputAvatarUrl,
+  avatarImage,
+  avatarEditIcon,
+};
