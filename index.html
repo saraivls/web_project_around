@@ -21,11 +21,17 @@
     </header>
     <main class="content">
         <div class="profile">
-          <img
+          <div class="profile__cont"><img
             class="profile__avatar"
             src="images/Avatar.png"
             alt="foto de avatar"
           />
+           <img
+              class="profile__avatar-pencil"
+              src="./images/pencil_act_profile.png"
+              alt=" Editar avatar"
+            />
+          </div>
           <div class="profile__info">
             <div class="profile__details">
                 <h1 class="profile__name">Jacques Cousteau</h1>
@@ -133,6 +139,27 @@
           <h2 id="popup-label" class="popup-name">Nuevo Lugar</h2>
         </div>
       </dialog>
+
+       <!-- Popup para cambiar la foto de perfil -->
+      <dialog class="popup" id="avatar-popup">
+        <div class="popup__container">
+    <button class="close" id="close-avatar">x</button>
+    <h2 class="popup__title">Cambiar foto de perfil</h2>
+    <form method="post" class="popup__form">
+      <input
+        type="url"
+        name="avatar-link"
+        class="popup__input popup__input_avatar-link"
+        placeholder="URL de la nueva imagen"
+        required
+      />
+      <span class="popup__error" id="card-url-error-profile"></span>
+      <button type="submit" class="submit" id="save-avatar">
+        <span class="submit__text">Guardar</span>
+      </button>
+    </form>
+  </div>
+</dialog>
       <dialog class="popup popup_type_confirm" id="confirm-popup">
   <div class="popup__container popup__container_type_confirm">
     <button class="popup__close" id="close-confirm">×</button>
