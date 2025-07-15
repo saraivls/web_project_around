@@ -27,6 +27,12 @@ import {
   cardGallery,
   initialCards,
   initialFormValidator,
+   popupAvatar,
+  closeAvatar,
+  saveAvatar,
+  inputAvatarUrl,
+  avatarImage,
+  avatarEditIcon,
 } from "./Utils.js";
 
 const imagePopup = new PopupWithImage("#image-popup");
@@ -60,7 +66,7 @@ function handleCardSubmit(formData) {
     link: formData['card-url'] || ''
   };
   
-  api.addNewCard(newCard)
+  api.addCard(newCard)
     .then((res) => {
       const cardNode = new Card(
         res.name,
@@ -73,7 +79,9 @@ function handleCardSubmit(formData) {
       cardGallery.prepend(cardNode.getView());
       cardFormPopup.close();
     })
-    .catch(err => console.error("Error al crear tarjeta:", err));
+    .catch(err => console.error("Error al crear tarjeta:", err))
+
+    .finally(() => cardFormPopup.renderLoading(false));
 }
 
 
@@ -174,29 +182,6 @@ popupCard.addEventListener("click", (evt) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-import {
-  popupAvatar,
-  closeAvatar,
-  saveAvatar,
-  inputAvatarUrl,
-  avatarImage,
-  avatarEditIcon,
-} from "./Utils.js";
-
-
 avatarEditIcon.addEventListener("click", () => {
   popupAvatar.showModal();
   inputAvatarUrl.value = "";
@@ -213,13 +198,21 @@ saveAvatar.addEventListener("click", (evt) => {
   evt.preventDefault();
   const newAvatarUrl = inputAvatarUrl.value;
 
-  api
-    .updateProfilePicture(newAvatarUrl)
+  const loadingTextEl = saveAvatar.querySelector(".submit__text");
+  const defaultText = loadingTextEl.textContent;
+  loadingTextEl.textContent = "Guardando...";
+
+  api.updateProfilePicture(newAvatarUrl)
     .then((res) => {
       avatarImage.src = res.avatar;
       popupAvatar.close();
     })
     .catch((err) => {
       console.error("Error al actualizar la imagen de perfil:", err);
+    })
+    .finally(() => {
+      loadingTextEl.textContent = defaultText;
     });
 });
+
+
