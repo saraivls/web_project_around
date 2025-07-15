@@ -103,6 +103,16 @@ export class PopupWithForm extends Popup{
         super.close();
         this._form.reset();
       }
+
+      renderLoading(isLoading, loadingText = "Guardando...") {
+    if (!this.submitText) return;
+    if (isLoading) {
+      this._defaultText = this.submitText.textContent;
+      this.submitText.textContent = loadingText;
+    } else {
+      this.submitText.textContent = this._defaultText || "Guardar";
+    }
+  }
 }
 
 export class PopupWithConfirmation extends Popup {
