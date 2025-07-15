@@ -49,6 +49,8 @@ const userInfo = new UserInfo({
   jobSelector: ".profile__text"
 });
 
+
+
 const confirmPopup = new PopupWithConfirmation("#confirm-popup");
 confirmPopup.setEventListeners();
 
@@ -96,7 +98,8 @@ function handleDeleteClick(cardId, cardElement) {
       })
       .catch((err) => console.error("Error al eliminar tarjeta:", err));
     });
-}
+  }
+
 
 
 const section = new Section(
@@ -117,7 +120,13 @@ const section = new Section(
   ".gallery__cards" 
 );
 
-section.renderItems();
+
+
+api.getInitialCards()
+  .then(cards => {
+    section.renderItems(cards);
+  })
+  .catch(err => console.error("Error al obtener las tarjetas:", err));
 
 
 
