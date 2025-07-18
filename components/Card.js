@@ -1,4 +1,4 @@
-
+// components/Card.js
 export default class Card {
     constructor(name, link, cardSelector, handleCardClick, handleDeleteClick, cardId) {
         this._name = name;
@@ -37,11 +37,9 @@ export default class Card {
     }
 
     _setEventListeners() {
-     if (this._cardId) { 
-            this._removeCardButton.addEventListener("click", () => {
-                this._handleDeleteClick(this._cardId, this._element);
-            });
-        }
+        this._removeCardButton.addEventListener("click", () => {
+  this._handleDeleteClick(this._cardId, this._element);
+});
         this._likeButton.addEventListener("click", () => this._likedCard());
         this._cardImage.addEventListener("click", () => this._viewCard()); 
     }
@@ -60,11 +58,9 @@ export default class Card {
         this._closePopupImage = document.querySelector("#close-image");
         this._setEventListeners();
 
-       if (!this._cardId) {
-            this._removeCardButton.style.display = "none";
+        if (this._isLiked) {
+            this._likeButton.classList.toggle("liked-button");
         }
-
-        this._setEventListeners();
 
         return this._element;
     }
