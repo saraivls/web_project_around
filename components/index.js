@@ -96,7 +96,7 @@ function handleCardSubmit(formData) {
      })
     .catch(err => console.error("Error al crear tarjeta:", err))
 
-    .finally(() => cardFormPopup.renderLoading(false));
+   // .finally(() => cardFormPopup.renderLoading(false));
 }
 
 
