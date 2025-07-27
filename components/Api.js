@@ -5,10 +5,10 @@ class Api {
     }
 
     getUserInfo() {
-        return fetch(`${this.baseUrl}/users/me`, {
+        return fetch(`${this._baseUrl}/users/me`, {
            method: "GET",
             headers: {
-                ...this.headers
+                ...this._headers
             }
         })
         .then((res) => res.ok ? res.json() : Promise.reject(res.status))
@@ -31,7 +31,8 @@ class Api {
         console.error("Error al obtener las tarjetas:", error);
       });
   }
-
+  
+//sería este para editar el perfil, este envía los datos del usuario
   setUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
