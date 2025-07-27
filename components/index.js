@@ -38,7 +38,21 @@ import {
 const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners(); 
 
-const profileFormPopup = new PopupWithForm("#profile-popup", handleProfileSubmit);
+
+//no está actualizando directamente desde la api, no se mantienen los cambios en la página
+const profileFormPopup = new PopupWithForm("#profile-popup", (data) => {
+  api.setUserInfo({ name: data.name, about: data.job })
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        popupProfile.close();
+      })
+      .catch((err) => console.error("Error al actualizar la información del usuario:", err));
+});
+
+
+
+
+
 profileFormPopup.setEventListeners(); 
 
 const cardFormPopup = new PopupWithForm("#card-popup", handleCardSubmit);
@@ -63,8 +77,8 @@ function handleProfileSubmit(formData) {
 }
 
 function handleCardSubmit(formData) {
-  const newCard = {
-    name: formData['card-name'] || '',
+   const newCard = {
+    name: formData['card-title'] || '',
     link: formData['card-url'] || ''
   };
   
@@ -79,8 +93,7 @@ function handleCardSubmit(formData) {
         res._id
       );
       cardGallery.prepend(cardNode.getView());
-      cardFormPopup.close();
-    })
+     })
     .catch(err => console.error("Error al crear tarjeta:", err))
 
     .finally(() => cardFormPopup.renderLoading(false));
@@ -88,7 +101,7 @@ function handleCardSubmit(formData) {
 
 
 function handleDeleteClick(cardId, cardElement) {
-  confirmPopup.open();
+  confirmPopup.open(cardId);
   
   confirmPopup.setSubmitAction(() => {
     api.deleteCard(cardId)
@@ -100,13 +113,15 @@ function handleDeleteClick(cardId, cardElement) {
     });
   }
 
+let section;
 
-
-const section = new Section(
+api.getInitialCards()
+  .then(cards => {
+    section = new Section(
   {
-    items: initialCards,
+    items: cards,
     renderer: (item) => {
-  const cardNode = new Card(
+    const cardNode = new Card(
     item.name,
     item.link,
     "#card-template",
@@ -119,11 +134,6 @@ const section = new Section(
   },
   ".gallery__cards" 
 );
-
-
-
-api.getInitialCards()
-  .then(cards => {
     section.renderItems(cards);
   })
   .catch(err => console.error("Error al obtener las tarjetas:", err));
@@ -222,6 +232,11 @@ saveAvatar.addEventListener("click", (evt) => {
     .finally(() => {
       loadingTextEl.textContent = defaultText;
     });
+});
+
+api.getUserInfo()
+.then((userData) => {
+   avatarImage.src = userData.avatar;
 });
 
 
