@@ -36,27 +36,6 @@ export default class Popup {
   }
 }
 
-/*export class PopupWithImage extends Popup{
-    constructor({popupSelector}){
-        if (!popupSelector) {
-            throw new Error("popupSelector is required for PopupWithImage");
-        }
-        super(popupSelector);
-        this._imageElement = this._popup.querySelector('.image-details');
-        this._captionElement = this._popup.querySelector('.popup-name');
-    }
-
-    open({ link, name }) {
-        this._imageElement.src = link;
-        this._imageElement.alt = name;
-        this._captionElement.textContent = name;
-        super.open();
-      }
-    
-    close() {
-        super.close();
-      }
-}*/
 
 export class PopupWithImage extends Popup {
     constructor(popupSelector) {
@@ -78,8 +57,8 @@ export class PopupWithForm extends Popup{
     constructor(popupSelector, handleFormSubmit){
         super(popupSelector);
         this._handleFormSubmit = handleFormSubmit;
-        this._form = this._popup.querySelector('.popup__form');
-    this._inputList = this._form.querySelectorAll('.popup__input');
+        this._form = this._popup.querySelector(".popup__form");
+        this._inputList = this._form.querySelectorAll(".popup__input");
     }
 
      _getInputValues(){
@@ -92,10 +71,12 @@ export class PopupWithForm extends Popup{
 
     setEventListeners(){
         super.setEventListeners();
-        this._form.addEventListener('submit', (evt) => {
+        this._form.addEventListener("submit", (evt) => {
           evt.preventDefault();
+          const button = this._form.querySelector(".submit__text");
+          button.textContent = "Creando...";
           this._handleFormSubmit(this._getInputValues());
-          this.close();
+          setTimeout(() => { this.close()},1000);
           });
     }
 
@@ -104,52 +85,48 @@ export class PopupWithForm extends Popup{
         this._form.reset();
       }
 
-      renderLoading(isLoading, loadingText = "Guardando...") {
-    if (!this.submitText) return;
-    if (isLoading) {
-      this._defaultText = this.submitText.textContent;
-      this.submitText.textContent = loadingText;
-    } else {
-      this.submitText.textContent = this._defaultText || "Guardar";
-    }
+    /*  setEventListeners() {
+        super.setEventListeners();
+      this._form.addEventListener('submit', (evt) => {
+          evt.preventDefault();
+          const button = this._form.querySelector(".submit__text");
+          button.textContent = "Guardando...";
+          this._handleFormSubmit(this._getInputValues());
+        });
+      }
+      close() {
+        super.close();
+        this._form.reset();
+        const button = this._form.querySelector(".submit__text");
+        button.textContent = "Guardar";
+      }*/ //debo usar este codigo en la instancia con el metodo api de actualizar perfil
   }
-}
+
 
 export class PopupWithConfirmation extends Popup {
     constructor(popupSelector) {
         super(popupSelector);
          this._confirmButton = this._popup.querySelector('#confirm-delete-button');
     }
-    /*open(id) {
-        this._id = id;
-        super.open();
    
-
-    confirm(_id) {
-        this._popup.showModal();
-    } }*/
 
   setSubmitAction(action) {
     this._handleSubmitCallback = action;
   }
 
-    /*setEventListeners() {
-        super.setEventListeners();
-        this._popup.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-            console.log("submit", this._id);
-            this._handleConfirmDelete(this._id);
-            this.close();
-        });*/
-
+    
   setEventListeners() {
     super.setEventListeners();
     this._confirmButton.addEventListener('click', () => {
-      this._handleSubmitCallback?.();
+      console.log("submit", this._cardId);
+      this._handleSubmitCallback?.(this._cardId);
+      
     });
   }
 
   open(cardId) {
     super.open();
+    this._cardId = cardId;
   }
 }
+
