@@ -82,6 +82,8 @@ function handleCardSubmit(formData) {
     link: formData['card-url'] || ''
   };
   
+  const button = document.querySelector("#card-popup").querySelector(".submit__text");
+  button.textContent = "Creando...";
   api.addCard(newCard)
     .then((res) => {
       const cardNode = new Card(
