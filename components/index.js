@@ -41,12 +41,16 @@ imagePopup.setEventListeners();
 
 //no está actualizando directamente desde la api, no se mantienen los cambios en la página
 const profileFormPopup = new PopupWithForm("#profile-popup", (data) => {
-  api.setUserInfo({ name: data.name, about: data.job })
+  const button = document.querySelector("#profile-popup").querySelector(".submit__text");
+  button.textContent = "Guardando...";
+  api.setUserInfo({ name: data.name, about: data.about })
       .then((data) => {
         userInfo.setUserInfo(data);
         popupProfile.close();
+        button.textContent = "Guardar";
       })
       .catch((err) => console.error("Error al actualizar la información del usuario:", err));
+      button.textContent = "Guardar";
 });
 
 
@@ -221,7 +225,7 @@ saveAvatar.addEventListener("click", (evt) => {
 
   const loadingTextEl = saveAvatar.querySelector(".submit__text");
   const defaultText = loadingTextEl.textContent;
-  loadingTextEl.textContent = "Guardando...";
+  loadingTextEl.textContent = "Guardando..."; 
 
   api.updateProfilePicture(newAvatarUrl)
     .then((res) => {
@@ -239,6 +243,8 @@ saveAvatar.addEventListener("click", (evt) => {
 api.getUserInfo()
 .then((userData) => {
    avatarImage.src = userData.avatar;
+   namePerson.textContent = userData.name;
+   descriptionPerson.textContent = userData.about;
 });
 
 
