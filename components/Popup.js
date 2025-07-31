@@ -84,22 +84,6 @@ export class PopupWithForm extends Popup{
         super.close();
         this._form.reset();
       }
-
-    /*  setEventListeners() {
-        super.setEventListeners();
-      this._form.addEventListener('submit', (evt) => {
-          evt.preventDefault();
-          const button = this._form.querySelector(".submit__text");
-          button.textContent = "Guardando...";
-          this._handleFormSubmit(this._getInputValues());
-        });
-      }
-      close() {
-        super.close();
-        this._form.reset();
-        const button = this._form.querySelector(".submit__text");
-        button.textContent = "Guardar";
-      }*/ //debo usar este codigo en la instancia con el metodo api de actualizar perfil
   }
 
 

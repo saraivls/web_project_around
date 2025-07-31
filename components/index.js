@@ -39,7 +39,7 @@ const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners(); 
 
 
-//no está actualizando directamente desde la api, no se mantienen los cambios en la página
+// Initialize the popup for profile form submission
 const profileFormPopup = new PopupWithForm("#profile-popup", (data) => {
   const button = document.querySelector("#profile-popup").querySelector(".submit__text");
   button.textContent = "Guardando...";
@@ -69,17 +69,9 @@ const userInfo = new UserInfo({
 });
 
 
-
 const confirmPopup = new PopupWithConfirmation("#confirm-popup");
 confirmPopup.setEventListeners();
 
-function handleProfileSubmit(formData) {
-  userInfo.setUserInfo({
-    name: formData['profile-name'] || '',
-    job: formData['profile-job'] || ''
-  });
-  profileFormPopup.close();
-}
 
 function handleCardSubmit(formData) {
    const newCard = {
@@ -101,9 +93,7 @@ function handleCardSubmit(formData) {
       );
       cardGallery.prepend(cardNode.getView());
      })
-    .catch(err => console.error("Error al crear tarjeta:", err))
-
-   // .finally(() => cardFormPopup.renderLoading(false));
+    .catch(err => console.error("Error al crear tarjeta:", err));
 }
 
 
@@ -147,14 +137,6 @@ api.getInitialCards()
 
 
 
-/*initialCards.forEach((card) => {
-  const cardNode = new Card(card.name, card.link, "#card-template");
-  const cardNodeElement = cardNode.getView();
-  cardGallery.prepend(cardNodeElement);
-});*/
-// este codigo es antiguo y no se usa.
-
-
 initialFormValidator.forEach((formElement) => {
   const formValidator = new FormValidator(validationsSettings, formElement);
   formValidator.enableValidation();
@@ -166,12 +148,7 @@ closeButton.addEventListener("click", () => {
   popup.close();
   resetValidations(validationsSettings);
 });
-saveButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  namePerson.textContent = inputName.value;
-  descriptionPerson.textContent = inputDescription.value;
-  popup.close();
-});
+
 
 
 buttonCard.addEventListener("click", () => popupCard.showModal());
@@ -180,17 +157,7 @@ closeCard.addEventListener("click", () => {
   resetValidations(validationsSettings);
 });
 
-/*saveCard.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  const newCard = {
-    name: inputCardName.value,
-    link: cardUrl.value,
-  };
-  const cardNode = new Card(newCard.name, newCard.link, "#card-template");
-  cardGallery.prepend(cardNode.getView());
-  popupCard.close();
-});*/
-// este codigo es antiguo y no se usa.
+
 
 
 popup.addEventListener("click", (evt) => {

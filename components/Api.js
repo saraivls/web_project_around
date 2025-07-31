@@ -32,7 +32,7 @@ class Api {
       });
   }
   
-//sería este para editar el perfil, este envía los datos del usuario
+
   setUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
