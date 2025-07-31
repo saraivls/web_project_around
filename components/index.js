@@ -46,7 +46,7 @@ const profileFormPopup = new PopupWithForm("#profile-popup", (data) => {
   api.setUserInfo({ name: data.name, about: data.about })
       .then((data) => {
         userInfo.setUserInfo(data);
-        popupProfile.close();
+        profileFormPopup.close();
         button.textContent = "Guardar";
       })
       .catch((err) => console.error("Error al actualizar la información del usuario:", err));
@@ -64,7 +64,8 @@ cardFormPopup.setEventListeners();
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
-  jobSelector: ".profile__text"
+  jobSelector: ".profile__text",
+   avatarSelector: ".profile__avatar"
 });
 
 
