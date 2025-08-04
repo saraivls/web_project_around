@@ -1,11 +1,9 @@
 import { resetValidations, validationsSettings } from "../scripts/validate.js";
 import Card from "./Card.js";
 import FormValidator from '../components/FormValidator.js'; 
-import {
-  PopupWithForm,
-  PopupWithImage,
-  PopupWithConfirmation
-} from "./Popup.js";
+import  {PopupWithForm} from "../components/popupWithForm.js";
+import {PopupWithImage} from "../components/popupWithImage.js";
+import {PopupWithConfirmation} from "./Popup.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
 import { api } from './Api.js';
@@ -27,7 +25,7 @@ import {
   cardGallery,
   initialCards,
   initialFormValidator,
-   popupAvatar,
+  popupAvatar,
   closeAvatar,
   saveAvatar,
   inputAvatarUrl,

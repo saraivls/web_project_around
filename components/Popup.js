@@ -37,56 +37,6 @@ export default class Popup {
 }
 
 
-export class PopupWithImage extends Popup {
-    constructor(popupSelector) {
-        super(popupSelector);
-        this._popupImage = this._popup.querySelector('.image-details');
-        this._popupTitle = this._popup.querySelector('.popup-name');
-    }
-
-    open({ src, alt, caption }) {
-        this._popupImage.src = src;
-        this._popupImage.alt = alt || caption;
-        this._popupTitle.textContent = caption;
-
-        super.open();
-    }
-}
-
-export class PopupWithForm extends Popup{
-    constructor(popupSelector, handleFormSubmit){
-        super(popupSelector);
-        this._handleFormSubmit = handleFormSubmit;
-        this._form = this._popup.querySelector(".popup__form");
-        this._inputList = this._form.querySelectorAll(".popup__input");
-    }
-
-     _getInputValues(){
-        const formValues = {};
-    this._inputList.forEach(input => {
-      formValues[input.name] = input.value;
-    });
-    return formValues;
-    }
-
-    setEventListeners(){
-        super.setEventListeners();
-        this._form.addEventListener("submit", (evt) => {
-          evt.preventDefault();
-          const button = this._form.querySelector(".submit__text");
-          button.textContent = "Creando...";
-          this._handleFormSubmit(this._getInputValues());
-          setTimeout(() => { this.close()},1000);
-          });
-    }
-
-    close() {
-        super.close();
-        this._form.reset();
-      }
-  }
-
-
 export class PopupWithConfirmation extends Popup {
     constructor(popupSelector) {
         super(popupSelector);
